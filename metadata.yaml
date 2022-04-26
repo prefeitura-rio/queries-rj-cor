@@ -1,0 +1,6 @@
+models:
+  meio_ambiente_clima:
+    taxa_precipitacao_alertario:
+      spreadsheet_id: "14uivSibWsXQfIUIW3s2jq1KIOZ7c3CXz"
+    meteorologia_inmet:
+      spreadsheet_id: "17bKXwPYdVnwllnN-SWy784JtvRCmDLEz"
