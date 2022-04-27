@@ -28,6 +28,15 @@ SELECT
 {% if is_incremental() %}
 
     -- this filter will only be applied on an incremental run
-    WHERE data_medicao > (SELECT max(data_medicao) FROM {{ this }})
+    WHERE 
+        ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+        mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+        dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
+        data_medicao > (SELECT max(data_medicao) 
+                        FROM {{ this }}
+                        WHERE 
+                            id_estacao IN (1,2) AND
+                            data_particao >= SAFE_CAST(DATE_TRUNC(DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 1 DAY), month) AS DATE)
+                        )
 
 {% endif %}

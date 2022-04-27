@@ -43,13 +43,21 @@ SELECT
 {% if is_incremental() %}
 
     -- this filter will only be applied on an incremental run
-     WHERE SAFE_CAST(
-                SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
-           ) > (SELECT 
-                    MAX(
-                        SAFE_CAST(
-                            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
-                        )
-                    ) FROM {{ this }}
+     WHERE 
+        ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+        mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+        dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
+        SAFE_CAST(
+            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
+        ) > (SELECT 
+                MAX(
+                    SAFE_CAST(
+                        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
+                    )
                 )
+            FROM {{ this }}
+            WHERE
+                data_particao >= SAFE_CAST(DATE_TRUNC(DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 1 DAY), month) AS DATE)
+            )
 {% endif %}
+DATE_SUB(DATE "2008-12-25", INTERVAL 5 DAY)
