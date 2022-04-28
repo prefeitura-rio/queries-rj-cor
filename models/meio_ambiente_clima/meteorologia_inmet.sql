@@ -5,7 +5,8 @@
             "field": "data_particao",
             "data_type": "date",
             "granularity": "month",
-        }
+        },
+        post_hook='CREATE OR REPLACE TABLE `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet_last_partition` AS (SELECT CURRENT_DATETIME("America/Sao_Paulo") AS data_particao)'
     )
 }}
 
@@ -43,21 +44,14 @@ SELECT
 {% if is_incremental() %}
 
     -- this filter will only be applied on an incremental run
-     WHERE 
-        ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-        mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-        dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
-        SAFE_CAST(
-            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
-        ) > (SELECT 
-                MAX(
-                    SAFE_CAST(
-                        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
-                    )
-                )
-            FROM {{ this }}
-            WHERE
-                data_particao >= SAFE_CAST(DATE_TRUNC(DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 1 DAY), month) AS DATE)
-            )
+WHERE 
+ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
+SAFE_CAST(
+    SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
+) > (SELECT 
+        MAX(data_particao)
+    FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet_last_partition`
+    )
 {% endif %}
-DATE_SUB(DATE "2008-12-25", INTERVAL 5 DAY)

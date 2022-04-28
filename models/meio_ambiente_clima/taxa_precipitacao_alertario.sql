@@ -5,14 +5,15 @@
             "field": "data_particao",
             "data_type": "date",
             "granularity": "month",
-        }
+        },
+        post_hook='CREATE OR REPLACE TABLE `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition` AS (SELECT CURRENT_DATETIME("America/Sao_Paulo") AS data_particao)'
     )
 }}
 
 SELECT 
     SAFE_CAST(
         REGEXP_REPLACE(id_estacao, r'\.0$', '') AS STRING
-        ) id_estacao,
+    ) id_estacao,
     SAFE_CAST(
         SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
     ) AS data_medicao,
@@ -28,15 +29,14 @@ SELECT
 {% if is_incremental() %}
 
     -- this filter will only be applied on an incremental run
-    WHERE 
-        ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-        mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-        dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
-        data_medicao > (SELECT max(data_medicao) 
-                        FROM {{ this }}
-                        WHERE 
-                            id_estacao IN (1,2) AND
-                            data_particao >= SAFE_CAST(DATE_TRUNC(DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 1 DAY), month) AS DATE)
-                        )
+WHERE 
+    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    data_medicao > (SELECT 
+                        max(data_particao) 
+                    FROM 
+                        `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`
+                    )
 
 {% endif %}
