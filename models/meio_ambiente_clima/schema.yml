@@ -1,0 +1,71 @@
+version: 2
+
+models:
+  - name: meteorologia_inmet
+    description: "Dados meteorológicos obtidas das estações pluviométricas do inmet ( Instituto Nacional de Meteorologia ) na cidade do Rio de Janeiro. As medidas são feitas de hora em hora, cada registro contendo dados destas medidas para cada estação. Entre os dados temos horário da medição, acumulado de chuva em 1 hora, direção e velocidade do vento, temperatura, pressão atmosférica, umidade e radiação global."
+    columns:
+      - name: id_estcao
+        description: "ID da estação dada pelo INMET."
+        tests:
+          - unique
+          - not_null
+      - name: data
+        description: "Data em que foi realizada a medição."
+      - name: horario
+        description: "Horário em que foi realizada a medição."
+      - name: acumulado_chuva_1_h
+        description: "Acumulado de chuva em 1 hora na estação em mm."
+      - name: direcao_vento
+        description: "Direção horária do vento na estação em º (gr)."
+      - name: velocidade_vento
+        description: "Velocidade do vento na estação em m/s."
+      - name: rajada_vento_max
+        description: "Rajada de vento máxima na estação em m/s."
+      - name: pressao
+        description: "Pressão atmosférica ao nível da estação em hPa."
+      - name: pressao_minima
+        description: "Pressão atmosférica mínima na hora anterior em hPa."
+      - name: pressao_maxima
+        description: "Pressão atmosférica máxima na hora anterior em hPa."
+      - name: umidade
+        description: "Umidade relativa do ar instantânea na estação em %."
+      - name: umidade_minima
+        description: "Umidade relativa mínima na hora anterior em %."
+      - name: umidade_maxima
+        description: "Umidade relativa máxima na hora anterior em %."
+      - name: temperatura
+        description: "Temperatura na medição instantânea na estação em ºC."
+      - name: temperatura_minima
+        description: "Temperatura mínima na hora anterior na estação em ºC."
+      - name: temperatura_maxima
+        description: "Temperatura máxima na hora anterior na estação em ºC."
+      - name: radiacao_global
+        description: "Radiação solar global captada na estação em KJ/m²."
+      - name: temperatura_orvalho
+        description: "Temperatura de orvalho instantânea na estação ºC."
+      - name: temperatura_orvalho_minimo
+        description: "Temperatura mínima de orvalho na hora anterior ºC."
+      - name: temperatura_orvalho_maximo
+        description: "Temperatura máxima de orvalho na hora anterior ºC."
+
+
+  - name: taxa_precipitacao_alertario
+    description: "Taxa medida de precipitação das estações pluviométricas da cidade do Rio de Janeiro. As estimativas são feitas de 15 em 15 minutos, cada registro contendo dados desta medida."
+    columns:
+      - name: data_medicao
+        description: "Data e horário em que foi realizada a medição"
+      - name: id_estacao
+        description: "ID da estação pluviométrica em que ocorreu a medição."
+        tests:
+          - unique
+          - not_null
+      - name: acumulado_chuva_15_min
+        description: "Acumulado de chuva em 15 minutos."
+      - name: acumulado_chuva_1_h
+        description: "Acumulado de chuva em 1 hora."
+      - name: acumulado_chuva_4_h
+        description: "Acumulado de chuva em 4 horas."
+      - name: acumulado_chuva_24_h
+        description: "Acumulado de chuva em 24 horas."
+      - name: acumulado_chuva_96_h
+        description: "Acumulado de chuva em 96 horas."
