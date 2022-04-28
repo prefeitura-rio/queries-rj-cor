@@ -38,12 +38,12 @@ SELECT
     SAFE_CAST(radiacao_global AS FLOAT64) radiacao_global,
     SAFE_CAST(acumulado_chuva_1_h AS FLOAT64) acumulado_chuva_1_h,
     SAFE_CAST(DATE_TRUNC(DATE(data), month) AS DATE) data_particao,
-    FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet`
+FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet`
 
 
 {% if is_incremental() %}
 
-    -- this filter will only be applied on an incremental run
+-- this filter will only be applied on an incremental run
 WHERE 
 ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
 mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
