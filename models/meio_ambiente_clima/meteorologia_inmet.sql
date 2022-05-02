@@ -49,7 +49,7 @@ ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
 mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
 dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
 SAFE_CAST(
-    SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data_medicao, ' ', horario)) AS DATETIME
+    SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data, ' ', horario)) AS DATETIME
 ) > (SELECT 
         MAX(data_particao)
     FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet_last_partition`
