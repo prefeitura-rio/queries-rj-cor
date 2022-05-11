@@ -4,3 +4,7 @@ models:
       spreadsheet_id: "14uivSibWsXQfIUIW3s2jq1KIOZ7c3CXz"
     meteorologia_inmet:
       spreadsheet_id: "17bKXwPYdVnwllnN-SWy784JtvRCmDLEz"
+    taxa_precipitacao_satelite:
+      spreadsheet_id: "1EiSujf1lZhrTXMQ4Of1YvrtwAuNT3nTw"
+    quantidade_agua_precipitavel_satelite:
+      spreadsheet_id: "1Chaa696XzYcI4pOpdBZWRxe0Ay9UOKJq"
