@@ -1,6 +1,16 @@
 models:
   meio_ambiente_clima:
+    estacoes_alertario:
+      spreadsheet_id: "1_4NPxY5ySs8Og00fj57j4NMOlqWcnVI6"
+    estacoes_inmet:
+      spreadsheet_id: "1x8ckA7NouX2JL4x2hD8Ys-NlmB0uOK9e"
+    estacoes_websirene:
+      spreadsheet_id: "1Yi42Dic0HjQiXtEwPKgH7O2OufoTgkgv"
     taxa_precipitacao_alertario:
       spreadsheet_id: "14uivSibWsXQfIUIW3s2jq1KIOZ7c3CXz"
     meteorologia_inmet:
       spreadsheet_id: "17bKXwPYdVnwllnN-SWy784JtvRCmDLEz"
+    taxa_precipitacao_satelite:
+      spreadsheet_id: "1EiSujf1lZhrTXMQ4Of1YvrtwAuNT3nTw"
+    quantidade_agua_precipitavel_satelite:
+      spreadsheet_id: "1Chaa696XzYcI4pOpdBZWRxe0Ay9UOKJq"
