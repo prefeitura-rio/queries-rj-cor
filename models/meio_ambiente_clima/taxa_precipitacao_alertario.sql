@@ -13,7 +13,8 @@
 
 SELECT 
     DISTINCT
-    {{ dbt_utils.surrogate_key(['id_estacao', 'data_medicao']) }} AS primary_key,
+    CONCAT(id_estacao, '-', data_medicao) AS primary_key,
+    --{{ dbt_utils.surrogate_key(['id_estacao', 'data_medicao']) }} AS primary_key,
     SAFE_CAST(
         REGEXP_REPLACE(id_estacao, r'\.0$', '') AS STRING
     ) id_estacao,
@@ -27,6 +28,7 @@ SELECT
     SAFE_CAST(acumulado_chuva_96_h AS FLOAT64) acumulado_chuva_96_h,
     SAFE_CAST(data_medicao AS DATE) data_particao,
 FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
+WHERE data_medicao >= '2022-04-01 00:00:00'
 
 
 {% if is_incremental() %}
