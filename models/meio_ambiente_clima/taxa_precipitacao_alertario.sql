@@ -14,7 +14,6 @@
 SELECT 
     DISTINCT
     CONCAT(id_estacao, '-', data_medicao) AS primary_key,
-    --{{ dbt_utils.surrogate_key(['id_estacao', 'data_medicao']) }} AS primary_key,
     SAFE_CAST(
         REGEXP_REPLACE(id_estacao, r'\.0$', '') AS STRING
     ) id_estacao,
