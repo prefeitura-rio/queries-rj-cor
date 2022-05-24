@@ -1,7 +1,7 @@
 {{
     config(
         materialized='incremental',
-        unique_key="primary_key", 
+        unique_key="primary_key",
         partition_by={
             "field": "data_particao",
             "data_type": "date",
@@ -27,16 +27,16 @@ SELECT
     SAFE_CAST(acumulado_chuva_96_h AS FLOAT64) acumulado_chuva_96_h,
     SAFE_CAST(data_medicao AS DATE) data_particao,
 FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
-WHERE data_medicao >= '2022-04-01 00:00:00'
+WHERE data_medicao >= '2022-04-01 00:00:00' AND
+    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo'))
 
 
 {% if is_incremental() %}
 
 -- this filter will only be applied on an incremental run
-WHERE 
-    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
+WHERE
     data_medicao > (SELECT 
                         max(data_particao) 
                     FROM 
@@ -46,6 +46,6 @@ WHERE
 {% set max_partition = run_query("SELECT gr FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
 
 AND
-    data_particao > ("{{ max_partition }}")
+    data_medicao > ("{{ max_partition }}")
 
 {% endif %}
