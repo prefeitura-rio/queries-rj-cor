@@ -1,8 +1,8 @@
 {{
     config(
         materialized='incremental',
+        unique_key="primary_key", 
         partition_by={
-            "unique_key": "primary_key", 
             "field": "data_particao",
             "data_type": "date",
             "granularity": "month", 
