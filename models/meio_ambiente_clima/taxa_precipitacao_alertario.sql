@@ -27,7 +27,7 @@ SELECT
     SAFE_CAST(acumulado_chuva_96_h AS FLOAT64) acumulado_chuva_96_h,
     SAFE_CAST(data_medicao AS DATE) data_particao,
 FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
-WHERE data_medicao >= '2022-04-01 00:00:00' AND
+WHERE
     ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
     mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
     dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo'))
