@@ -27,17 +27,15 @@ SELECT
     SAFE_CAST(acumulado_chuva_96_h AS FLOAT64) acumulado_chuva_96_h,
     SAFE_CAST(data_medicao AS DATE) data_particao,
 FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
-WHERE
-    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo'))
-
 
 {% if is_incremental() %}
 
 {% set max_partition = run_query("SELECT gr FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
 
-AND
+WHERE
+    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo')) AND
     data_medicao > ("{{ max_partition }}")
 
 {% endif %}
