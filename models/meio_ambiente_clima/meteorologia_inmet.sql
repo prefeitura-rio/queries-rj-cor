@@ -42,10 +42,6 @@ SELECT
     SAFE_CAST(acumulado_chuva_1_h AS FLOAT64) acumulado_chuva_1_h,
     SAFE_CAST(DATE_TRUNC(DATE(data), month) AS DATE) data_particao,
 FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet`
-WHERE
-    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo'))
 
 
 {% if is_incremental() %}
@@ -58,6 +54,11 @@ WHERE
         FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet_last_partition`
         )
     ").columns[0].values()[0] %}
+
+WHERE
+    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo'))
 
 AND
     SAFE_CAST(
