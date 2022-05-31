@@ -40,7 +40,7 @@ SELECT
     SAFE_CAST(velocidade_vento AS FLOAT64) velocidade_vento,
     SAFE_CAST(radiacao_global AS FLOAT64) radiacao_global,
     SAFE_CAST(acumulado_chuva_1_h AS FLOAT64) acumulado_chuva_1_h,
-    SAFE_CAST(DATE_TRUNC(DATE(data), month) AS DATE) data_particao,
+    SSAFE_CAST(data) data_particao,
 FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet`
 
 
