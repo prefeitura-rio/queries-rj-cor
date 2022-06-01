@@ -25,7 +25,7 @@ SELECT
     SAFE_CAST(acumulado_chuva_4_h AS FLOAT64) acumulado_chuva_4_h,
     SAFE_CAST(acumulado_chuva_24_h AS FLOAT64) acumulado_chuva_24_h,
     SAFE_CAST(acumulado_chuva_96_h AS FLOAT64) acumulado_chuva_96_h,
-    SAFE_CAST(data_medicao AS DATE) data_particao,
+    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
 FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
 
 {% if is_incremental() %}
