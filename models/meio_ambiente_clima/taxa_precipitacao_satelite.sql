@@ -23,7 +23,7 @@ FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_satelite`
 {% if is_incremental() %}
 
 {% set max_partition = run_query(
-    "SELECT gr FROM (
+    "SELECT DATE(gr) FROM (
         SELECT IF(
             max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)
             ) as gr 
