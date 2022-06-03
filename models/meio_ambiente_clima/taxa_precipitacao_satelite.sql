@@ -13,8 +13,8 @@
 
 SELECT
     CONCAT(data_particao, ' ', hora) AS primary_key,
-    SAFE_CAST(longitute AS FLOAT64) longitude,
-    SAFE_CAST(latitute AS FLOAT64) latitude,
+    SAFE_CAST(longitude AS FLOAT64) longitude,
+    SAFE_CAST(latitude AS FLOAT64) latitude,
     SAFE_CAST(rrqpe AS FLOAT64) rrqpe,
     SAFE_CAST(DATE_TRUNC(DATE(data_particao), day) AS DATE) data_particao,
 FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_satelite`
