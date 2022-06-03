@@ -32,7 +32,7 @@ FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_satelite`
     ").columns[0].values()[0] %}
 
 WHERE 
-    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    ano_particao = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
+    mes_particao = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
     data_particao > ("{{ max_partition }}")
 {% endif %}
