@@ -27,7 +27,7 @@ FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_satelite`
         SELECT IF(
             max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)
             ) as gr 
-        FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_last_partition`
+        FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_satelite_last_partition`
         )
     ").columns[0].values()[0] %}
 
