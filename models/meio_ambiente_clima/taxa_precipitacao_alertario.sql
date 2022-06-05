@@ -30,7 +30,7 @@ FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
 
 {% if is_incremental() %}
 
-{% set max_partition = run_query("SELECT gr FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
+{% set max_partition = run_query("SELECT DATE(gr) FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
 
 WHERE
     ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
