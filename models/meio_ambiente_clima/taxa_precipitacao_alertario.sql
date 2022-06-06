@@ -13,18 +13,18 @@
 
 SELECT 
     DISTINCT
-    CONCAT(id_estacao, '-', data_medicao) AS primary_key,
+    CONCAT(id_estacao, '_', data_medicao) AS primary_key,
     SAFE_CAST(
         REGEXP_REPLACE(id_estacao, r'\.0$', '') AS STRING
     ) id_estacao,
-    SAFE_CAST(
-        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
-    ) AS data_medicao,
     SAFE_CAST(acumulado_chuva_15_min AS FLOAT64) acumulado_chuva_15_min,
     SAFE_CAST(acumulado_chuva_1_h AS FLOAT64) acumulado_chuva_1_h,
     SAFE_CAST(acumulado_chuva_4_h AS FLOAT64) acumulado_chuva_4_h,
     SAFE_CAST(acumulado_chuva_24_h AS FLOAT64) acumulado_chuva_24_h,
     SAFE_CAST(acumulado_chuva_96_h AS FLOAT64) acumulado_chuva_96_h,
+    SAFE_CAST(
+        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS TIME
+    ) AS horario,
     SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
 FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
 
