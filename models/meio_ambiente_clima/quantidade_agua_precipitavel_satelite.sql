@@ -35,5 +35,5 @@ FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_satelite`
 WHERE 
     ano_particao = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
     mes_particao = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    data_particao > ("{{ max_partition }}")
+    data_particao >= ("{{ max_partition }}")
 {% endif %}
