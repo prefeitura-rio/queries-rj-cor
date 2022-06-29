@@ -28,9 +28,9 @@ WITH remove_duplicated as (
     {% if is_incremental() %}
 
     {% set max_partition = run_query("SELECT DATE(gr) FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
-        ano >= EXTRACT(YEAR FROM ("{{ max_partition }}")) AND
-        mes >= EXTRACT(MONTH FROM ("{{ max_partition }}")) AND
-        dia >= EXTRACT(DAY FROM ("{{ max_partition }}"))
+        ano >= EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AND
+        mes >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AND
+        dia >= EXTRACT(DAY FROM DATE(("{{ max_partition }}")))
 
     {% endif %}
 
