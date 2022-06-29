@@ -11,35 +11,46 @@
     )
 }}
 
-WITH temp as (
+WITH remove_duplicated as (
     SELECT 
-        DISTINCT
-        CONCAT(id_estacao, '_', data_medicao) AS primary_key,
         SAFE_CAST(
             REGEXP_REPLACE(id_estacao, r'\.0$', '') AS STRING
         ) id_estacao,
-        SAFE_CAST(acumulado_chuva_15_min AS FLOAT64) acumulado_chuva_15_min,
-        SAFE_CAST(acumulado_chuva_1_h AS FLOAT64) acumulado_chuva_1_h,
-        SAFE_CAST(acumulado_chuva_4_h AS FLOAT64) acumulado_chuva_4_h,
-        SAFE_CAST(acumulado_chuva_24_h AS FLOAT64) acumulado_chuva_24_h,
-        SAFE_CAST(acumulado_chuva_96_h AS FLOAT64) acumulado_chuva_96_h,
-        SAFE_CAST(
-            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS TIME
-        ) AS horario,
-        SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
+        data_medicao,
+        MIN(SAFE_CAST(acumulado_chuva_15_min AS FLOAT64)) acumulado_chuva_15_min,
+        MIN(SAFE_CAST(acumulado_chuva_1_h AS FLOAT64)) acumulado_chuva_1_h,
+        MIN(SAFE_CAST(acumulado_chuva_4_h AS FLOAT64)) acumulado_chuva_4_h,
+        MIN(SAFE_CAST(acumulado_chuva_24_h AS FLOAT64)) acumulado_chuva_24_h,
+        MIN(SAFE_CAST(acumulado_chuva_96_h AS FLOAT64)) acumulado_chuva_96_h
     FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
     WHERE
-    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo'))
+
+    {% if is_incremental() %}
+
+    {% set max_partition = run_query("SELECT DATE(gr) FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
+        ano >= EXTRACT(YEAR FROM ("{{ max_partition }}")) AND
+        mes >= EXTRACT(MONTH FROM ("{{ max_partition }}")) AND
+        dia >= EXTRACT(DAY FROM ("{{ max_partition }}"))
+
+    {% endif %}
+
+    GROUP BY
+        id_estacao,
+        data_medicao
 )
-SELECT * FROM temp
 
-{% if is_incremental() %}
-
-{% set max_partition = run_query("SELECT DATE(gr) FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
-
-WHERE
-    data_particao >= ("{{ max_partition }}")
-
-{% endif %}
+SELECT 
+    DISTINCT
+    CONCAT(id_estacao, '_', data_medicao) AS primary_key,
+    id_estacao,
+    acumulado_chuva_15_min,
+    acumulado_chuva_1_h,
+    acumulado_chuva_4_h,
+    acumulado_chuva_24_h,
+    acumulado_chuva_96_h,
+    SAFE_CAST(
+            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS TIME
+        ) AS horario,
+    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
+FROM 
+    remove_duplicated
