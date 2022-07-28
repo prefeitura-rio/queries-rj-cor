@@ -35,6 +35,9 @@ models:
     columns: true
   rj_cor:
     # Config indicated by + and applies to all files under models/example/
+    administracao_servicos_publicos:
+      +materialized: table
+      +schema: administracao_servicos_publicos
     meio_ambiente_clima:
       +materialized: view
       +schema: meio_ambiente_clima
