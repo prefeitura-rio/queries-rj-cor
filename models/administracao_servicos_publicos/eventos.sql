@@ -10,7 +10,18 @@
 }}
 
 SELECT
-    *
+    pop_id as id_pop,
+    evento_id as id_evento,
+    bairro,
+    inicio as data_inicio,
+    fim as data_fim,
+    prazo,
+    descricao,
+    gravidade,
+    latitude,
+    longitude,
+    status,
+    tipo
 FROM `rj-cor.administracao_servicos_publicos_staging.eventos`
 WHERE data_particao < CURRENT_DATE('America/Sao_Paulo')
 

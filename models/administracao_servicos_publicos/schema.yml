@@ -9,53 +9,54 @@ models:
       \ Nunca\n**Cobertura temporal**: Não informado.\n**Órgão gestor dos dados**:\
       \ COR\n**Publicado por**: Patrícia Catandi\n**Publicado por (email)**: patriciabcatandi@gmail.com\n"
     columns:
-      - name: evento_id
+      - name: id_evento
         description: "Identificador do evento."
         tests:
           - unique
           - not_null
-      - name: inicio
+      - name: data_inicio
         description: "Data e hora do registro do evento na PCRJ."
-      - name: fim
+      - name: data_fim
         description: "Data e hora do encerramento do evento na PCRJ. O evento é encerrado quando é solucionado. Este atributo está vazio quanto o evento está aberto."
       - name: bairro
         description: "Bairro onde ocorreu o evento."
-      - name: pop_id
-        description: "Identificador do POP ( procedimento operacional padrão )."
+      - name: id_pop
+        description: "Identificador do POP (procedimento operacional padrão)."
       - name: status
         description: "Status do evento (ABERTO, FECHADO)."
       - name: gravidade
         description: "Gravidade do evento (BAIXO, MEDIO, ALTO, CRITICO)."
       - name: prazo
-        description: "Prazo esperado de solução do evento (CURTO, MEDIO(acima de 3 dias), LONGO( acima de 5 dias))."
+        description: "Prazo esperado de solução do evento (CURTO, MEDIO (acima de 3 dias), LONGO (acima de 5 dias))."
       - name: latitude
         description: "Latitude em formato WGS-84 em que ocorreu o evento."
       - name: longitude
-        description: "Longitude em formato WGS-84 em que ocorreu o evento"
-      - name: informe_id
-        description: "Atributo não utilizado."
+        description: "Longitude em formato WGS-84 em que ocorreu o evento."
       - name: descricao
         description: "Descrição do evento."
+      - name: tipo
+        description: "Tipo do evento (PRIMARIO, SECUNDARIO)."
 
 
-  - name: atividades_eventos
+   - name: eventos_atividades
     description: "**Descrição**: Atividades estão sendo executadas ou que foram executadas.\n\
       **Frequência de atualização**: Nunca\n**Cobertura temporal**: Não informado.\n\
       **Órgão gestor dos dados**: COR\n**Publicado por**: Patrícia Catandi\n**Publicado\
       \ por (email)**: patriciabcatandi@gmail.com\n"
     columns:
-      - name: evento_id
+      - name: id_evento
         description: "Identificador do evento."
-      - name: inicio
+      - name: data_inicio
         description: "Data e hora do registro do evento na PCRJ."
-      - name: fim
+      - name: data_fim
         description: "Data e hora do encerramento do evento na PCRJ. O evento é encerrado quando é solucionado. Este atributo está vazio quanto o evento está aberto."
-      - name: chegada
+      - name: data_chegada
         description: "Data e hora da chegada da atividade."
       - name: sigla
         description: "Sigla do orgão que está realizando ou realizou a atividade."
       - name: status
         description: "Status do evento (ABERTO, FECHADO)."
+
 
   - name: atividades_orgaos_responsaveis_pop
     description: "**Descrição**: Atividades que compõem os POPs.\n**Frequência de\
@@ -63,8 +64,8 @@ models:
       \ dos dados**: COR\n**Publicado por**: Patrícia Catandi\n**Publicado por (email)**:\
       \ patriciabcatandi@gmail.com\n"
     columns:
-      - name: pop_titulo
-        description: "Nome da POP ao qual a atividade está ligada."
+      - name: id_pop
+        description: "Id do POP ao qual a atividade está ligada."
       - name: sigla
         description: "Sigla do órgão responsável pela atividade."
       - name: orgao
@@ -82,5 +83,5 @@ models:
     columns:
       - name: pop_titulo
         description: "Nome da POP ao qual a atividade está ligada."
-      - name: pop_id
+      - name: id_pop
         description: "Identificador do POP procedimento operacional padrão)."
