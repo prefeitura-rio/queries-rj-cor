@@ -38,7 +38,7 @@ models:
         description: "Tipo do evento (PRIMARIO, SECUNDARIO)."
 
 
-   - name: eventos_atividades
+  - name: eventos_atividades
     description: "**Descrição**: Atividades estão sendo executadas ou que foram executadas.\n\
       **Frequência de atualização**: Nunca\n**Cobertura temporal**: Não informado.\n\
       **Órgão gestor dos dados**: COR\n**Publicado por**: Patrícia Catandi\n**Publicado\
