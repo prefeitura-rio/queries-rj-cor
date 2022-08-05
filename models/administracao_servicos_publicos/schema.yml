@@ -56,7 +56,8 @@ models:
         description: "Sigla do orgão que está realizando ou realizou a atividade."
       - name: status
         description: "Status do evento (ABERTO, FECHADO)."
-
+      - name: descricao
+        description: "Descrição da atividade."
 
   - name: atividades_orgaos_responsaveis_pop
     description: "**Descrição**: Atividades que compõem os POPs.\n**Frequência de\
