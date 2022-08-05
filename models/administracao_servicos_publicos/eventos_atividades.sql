@@ -12,7 +12,7 @@
 SELECT
     evento_id as id_evento,
     sigla,
-    chegada,
+    chegada as data_chegada,
     inicio as data_inicio,
     fim as data_fim,
     descricao,
