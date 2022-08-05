@@ -10,7 +10,13 @@
 }}
 
 SELECT
-    *
+    evento_id as id_evento,
+    sigla,
+    chegada,
+    inicio as data_inicio,
+    fim as data_fim,
+    descricao,
+    status
 FROM `rj-cor.administracao_servicos_publicos_staging.atividades_eventos`
 WHERE data_particao < CURRENT_DATE('America/Sao_Paulo')
 
