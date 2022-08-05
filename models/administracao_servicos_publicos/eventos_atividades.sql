@@ -16,7 +16,8 @@ SELECT
     inicio as data_inicio,
     fim as data_fim,
     descricao,
-    status
+    status,
+    data_particao
 FROM `rj-cor.administracao_servicos_publicos_staging.atividades_eventos`
 WHERE data_particao < CURRENT_DATE('America/Sao_Paulo')
 

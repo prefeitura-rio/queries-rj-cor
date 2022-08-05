@@ -21,7 +21,8 @@ SELECT
     latitude,
     longitude,
     status,
-    tipo
+    tipo,
+    data_particao
 FROM `rj-cor.administracao_servicos_publicos_staging.eventos`
 WHERE data_particao < CURRENT_DATE('America/Sao_Paulo')
 
