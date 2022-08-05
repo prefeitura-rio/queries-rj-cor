@@ -10,11 +10,11 @@
 }}
 
 SELECT
-    pop_id as id_pop,
-    evento_id as id_evento,
+    id_pop,
+    id_evento,
     bairro,
-    inicio as data_inicio,
-    fim as data_fim,
+    data_inicio,
+    data_fim,
     prazo,
     descricao,
     gravidade,
