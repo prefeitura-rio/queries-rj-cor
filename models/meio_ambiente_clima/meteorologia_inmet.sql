@@ -53,9 +53,9 @@ FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet`
     ").columns[0].values()[0] %}
 
 WHERE
-    ano = EXTRACT(YEAR FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    mes = EXTRACT(MONTH FROM CURRENT_DATE('America/Sao_Paulo')) AND
-    dia = EXTRACT(DAY FROM CURRENT_DATE('America/Sao_Paulo'))
+    ano >= EXTRACT(YEAR FROM ("{{ max_partition }}")) AND
+    mes >= EXTRACT(MONTH FROM ("{{ max_partition }}")) AND
+    dia >= EXTRACT(DAY FROM ("{{ max_partition }}"))
 
 AND
     SAFE_CAST(
