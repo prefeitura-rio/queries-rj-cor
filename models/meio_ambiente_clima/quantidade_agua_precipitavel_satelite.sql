@@ -11,16 +11,6 @@
     )
 }}
 
-SELECT
-    CONCAT(data_particao, '_', CONCAT(SAFE_CAST(hora AS STRING), ":00:00"), '_', latitude, '_', longitude) AS primary_key,
-    SAFE_CAST(longitude AS FLOAT64) longitude,
-    SAFE_CAST(latitude AS FLOAT64) latitude,
-    SAFE_CAST(tpw AS FLOAT64) tpw,
-    SAFE_CAST(CONCAT(SAFE_CAST(hora AS STRING), ":00:00") AS TIME) horario,
-    SAFE_CAST(DATE_TRUNC(DATE(data_particao), day) AS DATE) data_particao,
-FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_satelite`
-
-
 {% if is_incremental() %}
 
 {% set max_partition = run_query(
@@ -31,9 +21,22 @@ FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_satelite`
     FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_satelite_last_partition`
     ").columns[0].values()[0] %}
 
+DECLARE last_update DATETIME DEFAULT (SELECT 
+    SAFE_CAST("{{ max_partition }}" AS DATETIME));
+
+SELECT
+    CONCAT(data_particao, '_', CONCAT(SAFE_CAST(hora AS STRING), ":00:00"), '_', latitude, '_', longitude) AS primary_key,
+    SAFE_CAST(longitude AS FLOAT64) longitude,
+    SAFE_CAST(latitude AS FLOAT64) latitude,
+    SAFE_CAST(tpw AS FLOAT64) tpw,
+    SAFE_CAST(CONCAT(SAFE_CAST(hora AS STRING), ":00:00") AS TIME) horario,
+    SAFE_CAST(DATE_TRUNC(DATE(data_particao), day) AS DATE) data_particao,
+FROM `rj-cor.meio_ambiente_clima_staging.quantidade_agua_precipitavel_satelite`
 WHERE 
-    ano_particao >= EXTRACT(YEAR FROM SAFE_CAST("{{ max_partition }}" AS DATETIME)) AND
-    mes_particao >= EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS DATETIME)) AND
-    data_particao >= EXTRACT(DATE FROM SAFE_CAST("{{ max_partition }}" AS DATETIME)) AND
-    hora >= EXTRACT(HOUR FROM SAFE_CAST("{{ max_partition }}" AS DATETIME))
+    ano_particao >= EXTRACT(YEAR FROM SAFE_CAST(last_update AS DATETIME)) AND
+    mes_particao >= EXTRACT(MONTH FROM last_update) AND
+    data_particao >= EXTRACT(DATE FROM last_update) AND
+    hora >= EXTRACT(HOUR FROM last_update)
 {% endif %}
+
+--rj-cor
