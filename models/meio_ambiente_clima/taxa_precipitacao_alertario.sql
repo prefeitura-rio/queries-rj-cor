@@ -23,17 +23,25 @@ WITH remove_extreme_values as (
         CASE WHEN SAFE_CAST(acumulado_chuva_24_h AS FLOAT64)   < 0 THEN NULL ELSE acumulado_chuva_24_h END acumulado_chuva_24_h,
         CASE WHEN SAFE_CAST(acumulado_chuva_96_h AS FLOAT64)   < 0 THEN NULL ELSE acumulado_chuva_96_h END acumulado_chuva_96_h
     FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
-    WHERE
-
+    
     {% if is_incremental() %}
 
-    {% set max_partition = run_query("SELECT DATE(gr) FROM (SELECT IF(max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)) as gr FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`)").columns[0].values()[0] %}
+    {% set max_partition = run_query(
+        "SELECT DATE(gr) FROM (
+            SELECT IF(
+                max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), 
+                CURRENT_DATE('America/Sao_Paulo'), 
+                max(data_particao)
+            ) as gr 
+            FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario_last_partition`
+        )").columns[0].values()[0] %}
+    WHERE
         ano >= EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AND
         mes >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AND
         dia >= EXTRACT(DAY FROM DATE(("{{ max_partition }}")))
-    ),
     
     {% endif %} 
+    ),
 
     remove_duplicated as (
     SELECT 
