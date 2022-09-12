@@ -33,6 +33,8 @@ WITH remove_extreme_values as (
         dia >= EXTRACT(DAY FROM DATE(("{{ max_partition }}")))
 
     {% endif %}
+
+    AND ano >= 1900
 ),
 
     remove_duplicated as (
