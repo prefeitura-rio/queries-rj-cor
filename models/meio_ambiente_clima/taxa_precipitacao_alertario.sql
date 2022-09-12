@@ -31,11 +31,9 @@ WITH remove_extreme_values as (
         ano >= EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AND
         mes >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AND
         dia >= EXTRACT(DAY FROM DATE(("{{ max_partition }}")))
-
-    {% endif %}
-
-    AND ano >= 1900
-),
+    ),
+    
+    {% endif %} 
 
     remove_duplicated as (
     SELECT 
