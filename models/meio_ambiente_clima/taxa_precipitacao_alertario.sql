@@ -11,17 +11,17 @@
     )
 }}
 
-WITH remove_duplicated as (
+WITH remove_extreme_values as (
     SELECT 
         SAFE_CAST(
             REGEXP_REPLACE(id_estacao, r'\.0$', '') AS STRING
         ) id_estacao,
         data_medicao,
-        MIN(SAFE_CAST(acumulado_chuva_15_min AS FLOAT64)) acumulado_chuva_15_min,
-        MIN(SAFE_CAST(acumulado_chuva_1_h AS FLOAT64)) acumulado_chuva_1_h,
-        MIN(SAFE_CAST(acumulado_chuva_4_h AS FLOAT64)) acumulado_chuva_4_h,
-        MIN(SAFE_CAST(acumulado_chuva_24_h AS FLOAT64)) acumulado_chuva_24_h,
-        MIN(SAFE_CAST(acumulado_chuva_96_h AS FLOAT64)) acumulado_chuva_96_h
+        CASE WHEN SAFE_CAST(acumulado_chuva_15_min AS FLOAT64) < 0 THEN NULL ELSE acumulado_chuva_15_min END acumulado_chuva_15_min,
+        CASE WHEN SAFE_CAST(acumulado_chuva_1_h AS FLOAT64)    < 0 THEN NULL ELSE acumulado_chuva_1_h END acumulado_chuva_1_h,
+        CASE WHEN SAFE_CAST(acumulado_chuva_4_h AS FLOAT64)    < 0 THEN NULL ELSE acumulado_chuva_4_h END acumulado_chuva_4_h,
+        CASE WHEN SAFE_CAST(acumulado_chuva_24_h AS FLOAT64)   < 0 THEN NULL ELSE acumulado_chuva_24_h END acumulado_chuva_24_h,
+        CASE WHEN SAFE_CAST(acumulado_chuva_96_h AS FLOAT64)   < 0 THEN NULL ELSE acumulado_chuva_96_h END acumulado_chuva_96_h
     FROM `rj-cor.meio_ambiente_clima_staging.taxa_precipitacao_alertario`
     WHERE
 
@@ -33,7 +33,18 @@ WITH remove_duplicated as (
         dia >= EXTRACT(DAY FROM DATE(("{{ max_partition }}")))
 
     {% endif %}
+),
 
+    remove_duplicated as (
+    SELECT 
+        id_estacao,
+        data_medicao,
+        MIN(SAFE_CAST(acumulado_chuva_15_min AS FLOAT64)) acumulado_chuva_15_min,
+        MIN(SAFE_CAST(acumulado_chuva_1_h AS FLOAT64)) acumulado_chuva_1_h,
+        MIN(SAFE_CAST(acumulado_chuva_4_h AS FLOAT64)) acumulado_chuva_4_h,
+        MIN(SAFE_CAST(acumulado_chuva_24_h AS FLOAT64)) acumulado_chuva_24_h,
+        MIN(SAFE_CAST(acumulado_chuva_96_h AS FLOAT64)) acumulado_chuva_96_h
+    FROM remove_extreme_values
     GROUP BY
         id_estacao,
         data_medicao
