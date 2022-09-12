@@ -49,9 +49,4 @@ WHERE
     mes >= EXTRACT(MONTH FROM SAFE_CAST('{{ var("actual_run") }}' AS DATE)) AND
     dia >= EXTRACT(DAY FROM SAFE_CAST('{{ var("actual_run") }}' AS DATE))
 
-AND
-    SAFE_CAST(
-        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', CONCAT(data, ' ', horario)) AS DATETIME
-    ) > ('{{ var("actual_run") }}')
-
 {% endif %}
