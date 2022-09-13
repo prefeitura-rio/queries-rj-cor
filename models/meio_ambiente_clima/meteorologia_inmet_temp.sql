@@ -6,8 +6,7 @@
             "field": "data_particao",
             "data_type": "date",
             "granularity": "month",
-        },
-        -- post_hook='CREATE OR REPLACE TABLE `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet_last_partition` AS (SELECT CURRENT_DATETIME("America/Sao_Paulo") AS data_particao)'
+        }
     )
 }}
 
