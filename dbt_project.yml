@@ -37,7 +37,7 @@ models:
     # Config indicated by + and applies to all files under models/example/
     administracao_servicos_publicos:
       +materialized: table
-      +schema: administracao_servicos_publicos
+      +schema: adm_cor_comando
     meio_ambiente_clima:
       +materialized: view
       +schema: meio_ambiente_clima
