@@ -1,1 +1,0 @@
-SELECT * FROM `rj-cor.administracao_servicos_publicos_staging.atividades_orgaos_responsaveis_pop`
