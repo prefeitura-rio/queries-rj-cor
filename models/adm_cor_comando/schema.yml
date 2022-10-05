@@ -1,8 +1,8 @@
 version: 2
 
 models:
-  - name: eventos
-    description: "**Descrição**: Eventos desde 2015. Um evento é uma ocorrência na\
+  - name: ocorrencias
+    description: "**Descrição**: Ocorrencias desde 2015. Uma ocorrência é um acontecimento na\
       \ cidade do Rio de Janeiro que exija um acompanhamento e na maioria das vezes\
       \ uma ação da PCRJ. Por exemplo, Buraco na pista, bolsão d'água, enguiço mecânico.\
       \ Um evento aberto que não foi solucionado.\n**Frequência de atualização**:\
@@ -38,7 +38,7 @@ models:
         description: "Tipo do evento (PRIMARIO, SECUNDARIO)."
 
 
-  - name: eventos_atividades
+  - name: ocorrencias_orgaos_responsaveis
     description: "**Descrição**: Atividades estão sendo executadas ou que foram executadas.\n\
       **Frequência de atualização**: Nunca\n**Cobertura temporal**: Não informado.\n\
       **Órgão gestor dos dados**: COR\n**Publicado por**: Patrícia Catandi\n**Publicado\
@@ -59,7 +59,7 @@ models:
       - name: descricao
         description: "Descrição da atividade."
 
-  - name: atividades_orgaos_responsaveis_pop
+  - name: procedimento_operacional_padrao_orgaos_responsaveis
     description: "**Descrição**: Atividades que compõem os POPs.\n**Frequência de\
       \ atualização**: Nunca\n**Cobertura temporal**: Não informado.\n**Órgão gestor\
       \ dos dados**: COR\n**Publicado por**: Patrícia Catandi\n**Publicado por (email)**:\

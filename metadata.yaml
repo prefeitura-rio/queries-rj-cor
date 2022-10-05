@@ -14,11 +14,12 @@ models:
       spreadsheet_id: "1EiSujf1lZhrTXMQ4Of1YvrtwAuNT3nTw"
     quantidade_agua_precipitavel_satelite:
       spreadsheet_id: "1Chaa696XzYcI4pOpdBZWRxe0Ay9UOKJq"
-    eventos:
+  adm_comando_cor:
+    ocorrencias:
       spreadsheet_id: "1u5j89SBJLv_ys5AjLp0Oeow_zImfqkA4"
-    eventos_atividades:
+    ocorrencias_orgaos_responsaveis:
       spreadsheet_id: "13WCajFFQ2PFvQjrO6cguyefiZ03p1izl"
     procedimento_operacional_padrao:
       spreadsheet_id: "1CMfXBhclmYTzn-nwh-p_vjLq_ZpcSr1k"
-    atividades_orgaos_responsaveis_pop:
+    procedimento_operacional_padrao_orgaos_responsaveis:
       spreadsheet_id: "1CatR1lQow7EztvgRcKjW50zxU1DV84fK"
