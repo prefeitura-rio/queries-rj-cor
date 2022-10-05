@@ -13,16 +13,16 @@ SELECT
     id_pop,
     id_evento,
     bairro,
-    data_inicio,
-    data_fim,
+    SAFE_CAST(data_inicio AS TIMESTAMP) data_inicio,
+    SAFE_CAST(data_fim AS TIMESTAMP) data_fim,
     prazo,
     descricao,
     gravidade,
-    latitude,
-    longitude,
+    SAFE_CAST(latitude AS FLOAT64) latitude,
+    SAFE_CAST(longitude AS FLOAT64) longitude,
     status,
     tipo,
-    data_particao
+    SAFE_CAST(data_particao  AS DATE) as data_particao
 FROM `rj-cor.adm_cor_comando_staging.ocorrencias`
 WHERE data_particao < CURRENT_DATE('America/Sao_Paulo')
 
