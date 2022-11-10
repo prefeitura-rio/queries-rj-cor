@@ -1,4 +1,9 @@
 models:
+  clima_pluviometro:
+    estacoes_alertario:
+      spreadsheet_id: "1_4NPxY5ySs8Og00fj57j4NMOlqWcnVI6"
+    taxa_precipitacao_alertario:
+      spreadsheet_id: "14uivSibWsXQfIUIW3s2jq1KIOZ7c3CXz"
   meio_ambiente_clima:
     estacoes_alertario:
       spreadsheet_id: "1_4NPxY5ySs8Og00fj57j4NMOlqWcnVI6"
