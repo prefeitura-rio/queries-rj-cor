@@ -41,3 +41,6 @@ models:
     meio_ambiente_clima:
       +materialized: view
       +schema: meio_ambiente_clima
+    clima_pluviometro:
+      +materialized: view
+      +schema: clima_pluviometro
