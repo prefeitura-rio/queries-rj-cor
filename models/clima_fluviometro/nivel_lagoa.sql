@@ -1,6 +1,6 @@
 {{
     config(
-        materialized='overwrite',
+        materialized='table',
         unique_key="data_medicao",
         partition_by={
             "field": "data_particao",
