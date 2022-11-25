@@ -39,8 +39,11 @@ models:
       +materialized: table
       +schema: adm_cor_comando
     meio_ambiente_clima:
-      +materialized: view
+      +materialized: table
       +schema: meio_ambiente_clima
     clima_pluviometro:
-      +materialized: view
+      +materialized: table
       +schema: clima_pluviometro
+    clima_fluviometro:
+      +materialized: table
+      +schema: clima_fluviometro

@@ -1,0 +1,15 @@
+version: 2
+
+models :
+  - name: nivel_lagoa
+    description: "**Descrição**: Nivel da Lagoa Rodrigo de Freitas na margem noroeste da Ilha Caiçara. O nível é medido a partir da referência do Imbituba/IBGE e pode conter valores negativos quando estiver abaixo dessa referência.\n**Órgão responsável**: Fundação Rio-Águas\n**Frequência de atualização**: 15 minutos.\n**Fonte dos dados**: Squitter."
+    columns:
+      - name: data_medicao
+        description: "Data e hora da medição do nível."
+        tests:
+          - unique
+          - not_null
+      - name: nivel_agua
+        description: "Cota do nível d'água da lagoa no referencial IBGE Imbituba."
+      - name: data_particao
+        description: "Data da medição usada como partição da tabela."
