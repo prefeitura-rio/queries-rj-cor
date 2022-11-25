@@ -5,8 +5,9 @@
         partition_by={
             "field": "data_particao",
             "data_type": "date",
-            "granularity": "month", 
+            "granularity": "month",
         },
+    ),
 }}
 
 SELECT
