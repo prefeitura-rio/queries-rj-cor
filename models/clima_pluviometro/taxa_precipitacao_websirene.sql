@@ -16,7 +16,7 @@ WITH remove_extreme_values as (
         SAFE_CAST(
             REGEXP_REPLACE(id_estacao, r'\.0$', '') AS STRING
         ) id_estacao,
-        'data' AS data_medicao,
+        data_medicao,
         CASE WHEN SAFE_CAST(acumulado_chuva_15_min AS FLOAT64) < 0 THEN NULL ELSE acumulado_chuva_15_min END acumulado_chuva_15_min,
         CASE WHEN SAFE_CAST(acumulado_chuva_1_h AS FLOAT64)    < 0 THEN NULL ELSE acumulado_chuva_1_h END acumulado_chuva_1_h,
         CASE WHEN SAFE_CAST(acumulado_chuva_4_h AS FLOAT64)    < 0 THEN NULL ELSE acumulado_chuva_4_h END acumulado_chuva_4_h,
