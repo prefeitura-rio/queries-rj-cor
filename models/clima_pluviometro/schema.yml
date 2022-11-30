@@ -36,12 +36,16 @@ models:
   - name: taxa_precipitacao_alertario
     description: "Taxa medida de precipitação das estações pluviométricas da cidade do Rio de Janeiro. As estimativas são feitas de 15 em 15 minutos, cada registro contendo dados desta medida."
     columns:
+      - name: primary_key
+        description: "Chave primária criada a partir da coluna id_estacao e da data_medicao. Serve para evitar dados duplicados."
+        tests:
+          - unique
+          - not_null
       - name: data_medicao
         description: "Data e horário em que foi realizada a medição"
       - name: id_estacao
         description: "ID da estação pluviométrica em que ocorreu a medição."
         tests:
-          - unique
           - not_null
       - name: acumulado_chuva_15_min
         description: "Acumulado de chuva em 15 minutos."
@@ -53,3 +57,56 @@ models:
         description: "Acumulado de chuva em 24 horas."
       - name: acumulado_chuva_96_h
         description: "Acumulado de chuva em 96 horas."
+      - name: horario
+        description: "Horário no qual foi realizada a medição."
+      - name: data_particao
+        description: "Data em que foi realizada a medição"
+
+
+  - name: estacoes_websirene
+    description: "Dados sobre as estações pluviométricas do Sistema Alerta Sonoro da Prefeitura do Rio de Janeiro  (Websirene)."
+    columns:
+      - name: id_estacao
+        description: "ID da estação definido pelo Websirene."
+        tests:
+          - unique
+          - not_null
+      - name: estacao
+        description: "Nome da estação."
+      - name: latitude
+        description: "Latitude onde a estação se encontra."
+      - name: longitude
+        description: "Longitude onde a estação se encontra."
+
+  - name: taxa_precipitacao_websirene
+    description: "Taxa medida de precipitação das estações pluviométricas da Defesa Civil da cidade do Rio de Janeiro.\
+      \ As estimativas são feitas de 15 em 15 minutos, cada registro contendo dados desta medida.\
+      \ As medições dsses pluviômetros são utilizadas para ligar as sirenes da cidade."
+    columns:
+      - name: primary_key
+        description: "Chave primária criada a partir da coluna id_estacao e da data_medicao. Serve para evitar dados duplicados."
+        tests:
+          - unique
+          - not_null
+      - name: data_medicao
+        description: "Data e horário em que foi realizada a medição"
+      - name: id_estacao
+        description: "ID da estação pluviométrica em que ocorreu a medição."
+        tests:
+          - not_null
+      - name: acumulado_chuva_15_min
+        description: "Acumulado de chuva em 15 minutos."
+      - name: acumulado_chuva_1_h
+        description: "Acumulado de chuva em 1 hora."
+      - name: acumulado_chuva_4_h
+        description: "Acumulado de chuva em 4 horas."
+      - name: acumulado_chuva_24_h
+        description: "Acumulado de chuva em 24 horas."
+      - name: acumulado_chuva_96_h
+        description: "Acumulado de chuva em 96 horas."
+      - name: acumulado_chuva_mes
+        description: "Acumulado de chuva no mês."
+      - name: horario
+        description: "Horário no qual foi realizada a medição."
+      - name: data_particao
+        description: "Data em que foi realizada a medição"
