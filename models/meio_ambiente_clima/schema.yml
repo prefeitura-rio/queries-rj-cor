@@ -126,23 +126,6 @@ models:
       - name: data_atualizacao
         description: "Última data em que os dados sobre a data de operação foram atualizados."
 
-
-  - name: estacoes_websirene
-    description: "Dados sobre as estações pluviométricas do Sistema Alerta Sonoro da Prefeitura do Rio de Janeiro  (Websirene)."
-    columns:
-      - name: id_estacao
-        description: "ID da estação definido pelo Websirene."
-        tests:
-          - unique
-          - not_null
-      - name: estacao
-        description: "Nome da estação."
-      - name: latitude
-        description: "Latitude onde a estação se encontra."
-      - name: longitude
-        description: "Longitude onde a estação se encontra."
-
-
   - name: taxa_precipitacao_satelite
     description: "Taxa de precipitação estimada de áreas do sudeste brasileiro. As estimativas são feitas de hora em hora, cada registro contendo dados desta estimativa. Cada área é um quadrado formado por 4km de lado. Dados coletados pelo satélite GOES-16."
     columns:
