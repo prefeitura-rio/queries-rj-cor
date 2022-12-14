@@ -18,3 +18,5 @@ models :
         description: "Latitude na qual se encontra a câmera."
       - name: longitude
         description: "Longitude na qual se encontra a câmera."
+      - name: posicao_camera
+        description: "Indica se a câmera está fixa. Valor extraído da coluna original de endereço."
