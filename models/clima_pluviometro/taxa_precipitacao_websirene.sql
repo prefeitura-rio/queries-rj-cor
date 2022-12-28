@@ -36,9 +36,9 @@ WITH remove_extreme_values as (
             FROM `rj-cor.clima_pluviometro_staging.taxa_precipitacao_websirene_last_partition`
         )").columns[0].values()[0] %}
     WHERE
-        ano >= EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AND
-        mes >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AND
-        dia >= EXTRACT(DAY FROM DATE(("{{ max_partition }}")))
+        ano_particao >= EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AND
+        mes_particao >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AND
+        data_particao >= DATE(("{{ max_partition }}"))
     
     {% endif %} 
     ),
