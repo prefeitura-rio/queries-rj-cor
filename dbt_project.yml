@@ -44,9 +44,4 @@ models:
     clima_pluviometro:
       +materialized: table
       +schema: clima_pluviometro
-    clima_fluviometro:
-      +materialized: table
-      +schema: clima_fluviometro
-    fiscalizacao_rua:
-      +materialized: table
-      +schema: fiscalizacao_rua
+
