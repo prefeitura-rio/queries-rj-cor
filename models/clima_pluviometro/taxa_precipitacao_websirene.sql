@@ -37,7 +37,8 @@ WITH remove_extreme_values as (
         )").columns[0].values()[0] %}
     WHERE
         ano_particao >= EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AND
-        mes_particao >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}")))
+        mes_particao >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AND
+        data_particao >= DATE(("{{ max_partition }}"))
     
     {% endif %} 
     ),
