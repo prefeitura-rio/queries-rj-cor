@@ -47,7 +47,7 @@ models:
     clima_satelite:
       +materialized: table
       +schema: clima_fluviometro
-    clima_satelite:
+    clima_estacao_meteorologica:
       +materialized: table
       +schema: clima_estacao_meteorologica
     fiscalizacao_rua:
