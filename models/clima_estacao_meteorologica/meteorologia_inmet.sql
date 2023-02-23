@@ -7,7 +7,7 @@
             "data_type": "date",
             "granularity": "month",
         },
-        post_hook='CREATE OR REPLACE TABLE `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet_last_partition` AS (SELECT CURRENT_DATETIME("America/Sao_Paulo") AS data_particao)'
+        post_hook='CREATE OR REPLACE TABLE `rj-cor.clima_estacao_meteorologica_staging.meteorologia_inmet_last_partition` AS (SELECT CURRENT_DATETIME("America/Sao_Paulo") AS data_particao)'
     )
 }}
 
@@ -38,7 +38,7 @@ SELECT
         SAFE.PARSE_TIME('%H:%M:%S', horario) AS TIME
         ) horario,
     SAFE_CAST(data  AS DATE) data_particao,
-FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet`
+FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_inmet`
 
 
 {% if is_incremental() %}
@@ -48,7 +48,7 @@ FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet`
         SELECT IF(
             max(data_particao) > CURRENT_DATE('America/Sao_Paulo'), CURRENT_DATE('America/Sao_Paulo'), max(data_particao)
             ) as gr 
-        FROM `rj-cor.meio_ambiente_clima_staging.meteorologia_inmet_last_partition`
+        FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_inmet_last_partition`
         )
     ").columns[0].values()[0] %}
 

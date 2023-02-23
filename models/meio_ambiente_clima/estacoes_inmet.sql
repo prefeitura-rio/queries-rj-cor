@@ -1,1 +1,0 @@
-SELECT * FROM `rj-cor.meio_ambiente_clima_staging.estacoes_inmet`
