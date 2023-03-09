@@ -53,9 +53,9 @@ FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_inmet`
     ").columns[0].values()[0] %}
 
 WHERE
-    ano >= EXTRACT(YEAR FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AND
-    mes >= EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AND
-    dia >= EXTRACT(DAY FROM SAFE_CAST("{{ max_partition }}" AS DATE))
+    ano >= SAFE_CAST(EXTRACT(YEAR FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STR) AND
+    mes >= SAFE_CAST(EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STR) AND
+    dia >= SAFE_CAST(EXTRACT(DAY FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STR)
 
 AND
     SAFE_CAST(
