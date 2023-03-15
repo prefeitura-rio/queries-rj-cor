@@ -47,6 +47,11 @@ models:
         description: "Temperatura mínima de orvalho na hora anterior ºC."
       - name: temperatura_orvalho_maximo
         description: "Temperatura máxima de orvalho na hora anterior ºC."
+      - name: primary_key
+        description: Chave primária criada a partir da concatenação da coluna id_estacao,
+          data e horário Serve para evitar dados duplicados.
+      - name: data_particao
+        description: Data em que foi realizada a medição.
 
   - name: meteorologia_inmet_temp
     description: "Dados meteorológicos obtidas das estações do inmet ( Instituto Nacional de Meteorologia ) na cidade do Rio de Janeiro. As medidas são feitas de hora em hora, cada registro contendo dados destas medidas para cada estação. Entre os dados temos horário da medição, acumulado de chuva em 1 hora, direção e velocidade do vento, temperatura, pressão atmosférica, umidade e radiação global."
