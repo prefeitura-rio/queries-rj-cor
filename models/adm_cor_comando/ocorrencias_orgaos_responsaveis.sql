@@ -19,7 +19,7 @@ SELECT
     status,
     SAFE_CAST(data_particao AS DATE) data_particao
 FROM `rj-cor.adm_cor_comando_staging.ocorrencias_orgaos_responsaveis`
-WHERE data_particao < CURRENT_DATE('America/Sao_Paulo')
+WHERE data_particao <= CURRENT_DATE('America/Sao_Paulo')
 
 {% if is_incremental() %}
 
