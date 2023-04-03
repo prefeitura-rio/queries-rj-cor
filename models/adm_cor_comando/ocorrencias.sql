@@ -26,5 +26,10 @@ SELECT
     tipo,
     SAFE_CAST(data_particao  AS DATE) as data_particao
 FROM `rj-cor.adm_cor_comando_staging.ocorrencias`
-WHERE data_particao <= CURRENT_DATE('America/Sao_Paulo')
-AND data_particao >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
+
+{% if is_incremental() %}
+
+    WHERE data_particao <= CURRENT_DATE('America/Sao_Paulo')
+    AND data_particao >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
+
+{% endif %} 
