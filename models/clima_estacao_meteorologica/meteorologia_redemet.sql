@@ -22,7 +22,7 @@ SELECT
     teto,
     visibilidade,
     SAFE_CAST(
-            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data) AS TIME
+            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS TIME
         ) AS data_medicao,
     SAFE_CAST(DATE_TRUNC(DATE(data), day) AS DATE) data_particao
 FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_redemet`
