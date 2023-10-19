@@ -23,7 +23,7 @@ SELECT
     visibilidade,
     SAFE_CAST(
             SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data) AS TIME
-        ) AS horario,
+        ) AS data_medicao,
     SAFE_CAST(DATE_TRUNC(DATE(data), day) AS DATE) data_particao
 FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_redemet`
 
@@ -40,9 +40,9 @@ FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_redemet`
     ").columns[0].values()[0] %}
 
 WHERE
-    ano >= SAFE_CAST(EXTRACT(YEAR FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING) AND
-    mes >= SAFE_CAST(EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING) AND
-    dia >= SAFE_CAST(EXTRACT(DAY FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING)
+    ano_particao >= SAFE_CAST(EXTRACT(YEAR FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING) AND
+    mes_particao >= SAFE_CAST(EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING) AND
+    data_particao >= SAFE_CAST(EXTRACT(DATE FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING)
 
 AND
     SAFE_CAST(
