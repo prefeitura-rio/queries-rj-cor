@@ -46,7 +46,7 @@ WHERE
 
 AND
     SAFE_CAST(
-        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data) AS DATETIME
+        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
     ) > ("{{ max_partition }}")
 
 {% endif %}
