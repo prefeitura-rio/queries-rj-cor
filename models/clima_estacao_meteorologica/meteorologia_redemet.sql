@@ -13,10 +13,10 @@
 
 SELECT 
     DISTINCT
-    CONCAT(id_estacao, '_', data) AS primary_key,
+    CONCAT(id_estacao, '_', data_medicao) AS primary_key,
     id_estacao,
-    SAFE_CAST(temperatura AS INT64) temperatura,
-    SAFE_CAST(umidade AS INT64) umidade,
+    SAFE_CAST(SAFE_CAST(temperatura AS FLOAT64) AS INT64) temperatura,
+    SAFE_CAST(SAFE_CAST(umidade AS FLOAT64) AS INT64) umidade,
     condicoes_tempo,
     ceu,
     teto,
@@ -24,7 +24,7 @@ SELECT
     SAFE_CAST(
             SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS TIME
         ) AS data_medicao,
-    SAFE_CAST(DATE_TRUNC(DATE(data), day) AS DATE) data_particao
+    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
 FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_redemet`
 
 
