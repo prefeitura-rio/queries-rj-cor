@@ -40,9 +40,9 @@ FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_redemet`
     ").columns[0].values()[0] %}
 
 WHERE
-    ano_particao >= SAFE_CAST(EXTRACT(YEAR FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING) AND
-    mes_particao >= SAFE_CAST(EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING) AND
-    data_particao >= SAFE_CAST(EXTRACT(DATE FROM SAFE_CAST("{{ max_partition }}" AS DATE)) AS STRING)
+    ano_particao >= SAFE_CAST(EXTRACT(YEAR FROM SAFE_CAST("{{ max_partition }}" AS TIMESTAMP)) AS STRING) AND
+    mes_particao >= SAFE_CAST(EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS TIMESTAMP)) AS STRING) AND
+    data_particao >= SAFE_CAST(EXTRACT(DATE FROM SAFE_CAST("{{ max_partition }}" AS TIMESTAMP)) AS STRING)
 
 AND
     SAFE_CAST(
