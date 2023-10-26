@@ -12,7 +12,7 @@
 
 SELECT
     DISTINCT
-    SAFE_CAST(SAFE_CAST(id_pop AS FLOAT64) AS INT64) id_pop,
+    SAFE_CAST(SAFE_CAST(SAFE_CAST(id_pop AS FLOAT64) AS INT64) AS STRING) id_pop,
     id_evento,
     bairro,
     SAFE_CAST(data_inicio AS TIMESTAMP) data_inicio,
