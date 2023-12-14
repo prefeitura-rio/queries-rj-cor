@@ -13,18 +13,18 @@
 
 SELECT 
     DISTINCT
-    CONCAT(id_estacao, '_', data_medicao) AS primary_key,
     id_estacao,
+    SAFE_CAST(
+        SAFE.PARSE_DATETIME('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
+    ) AS data_medicao,
     SAFE_CAST(SAFE_CAST(temperatura AS FLOAT64) AS INT64) temperatura,
     SAFE_CAST(SAFE_CAST(umidade AS FLOAT64) AS INT64) umidade,
     condicoes_tempo,
     ceu,
     teto,
     visibilidade,
-    SAFE_CAST(
-            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS TIME
-        ) AS data_medicao,
-    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
+    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao,
+    CONCAT(id_estacao, '_', data_medicao) AS primary_key
 FROM `rj-cor.clima_estacao_meteorologica_staging.meteorologia_redemet`
 
 
@@ -44,9 +44,9 @@ WHERE
     mes_particao >= SAFE_CAST(EXTRACT(MONTH FROM SAFE_CAST("{{ max_partition }}" AS TIMESTAMP)) AS STRING) AND
     data_particao >= SAFE_CAST(EXTRACT(DATE FROM SAFE_CAST("{{ max_partition }}" AS TIMESTAMP)) AS STRING)
 
-AND
-    SAFE_CAST(
-        SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
-    ) > ("{{ max_partition }}")
+-- AND
+--     SAFE_CAST(
+--         SAFE.PARSE_DATETIME('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
+--     ) > ("{{ max_partition }}")
 
 {% endif %}

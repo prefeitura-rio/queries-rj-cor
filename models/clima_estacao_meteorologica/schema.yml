@@ -131,3 +131,48 @@ models:
       - name: data_atualizacao
         description: "Última data em que os dados sobre a data de operação foram atualizados."
 
+  - name: meteorologia_redemet
+    description: "Dados meteorológicos obtidos das estações meteorológicas dos aeródromos (aeroportos e bases aéreas) na cidade do Rio de Janeiro.\
+      \ As medidas são feitas de hora em hora, cada registro contendo dados destas medidas para cada estação."
+    columns:
+      - name: id_estacao
+        description: "Código único ICAO do aeródromo da estação."
+        tests:
+          - unique
+          - not_null
+      - name: data_medicao
+        description: "Data e horário no GMT-3 no qual foi realizada a medição."
+      - name: umidade
+        description: "Umidade relativa do ar instantânea na estação em %."
+      - name: condicoes_tempo
+        description: "Condições de tempo instantâneas na estação."
+      - name: ceu
+        description: "Condições de céu instantâneas na estação."
+      - name: teto
+        description: "Condições de formação de teto instantâneas na estação."
+      - name: temperatura
+        description: "Temperatura na medição instantânea na estação em ºC."
+      - name: visibilidade
+        description: "Condições de visibilidade instantâneas na estação."
+      - name: data_particao
+        description: "Data em que foi realizada a medição"
+
+
+  - name: estacoes_redemet
+    description: "Dados sobre as estações meteorológicas da REDEMET (Rede de Meteorologia do Comando da Aeronáutica) na cidade do Rio de Janeiro."
+    columns:
+      - name: id_estacao
+        description: "Código da estação definido pela REDEMET."
+        tests:
+          - unique
+          - not_null
+      - name: estacao
+        description: "Nome da estação."
+      - name: latitude
+        description: "Latitude onde a estação se encontra."
+      - name: longitude
+        description: "Longitude onde a estação se encontra."
+      - name: altitude
+        description: "Altitude onde a estação se encontra em metros."
+      - name: data_atualizacao
+        description: "Última data em que os dados foram atualizados."

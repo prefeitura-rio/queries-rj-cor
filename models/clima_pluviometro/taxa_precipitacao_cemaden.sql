@@ -15,7 +15,7 @@ WITH remove_extreme_values as (
     SELECT 
         SAFE_CAST(id_estacao AS STRING) id_estacao,
         data_medicao,
-        CASE WHEN SAFE_CAST(instantaneo_chuva AS FLOAT64)    < 0 THEN NULL ELSE instantaneo_chuva END instantaneo_chuva,
+        CASE WHEN SAFE_CAST(acumulado_chuva_10_min AS FLOAT64) < 0 THEN NULL ELSE acumulado_chuva_10_min END acumulado_chuva_10_min,
         CASE WHEN SAFE_CAST(acumulado_chuva_1_h AS FLOAT64)  < 0 THEN NULL ELSE acumulado_chuva_1_h END acumulado_chuva_1_h,
         CASE WHEN SAFE_CAST(acumulado_chuva_3_h AS FLOAT64)  < 0 THEN NULL ELSE acumulado_chuva_3_h END acumulado_chuva_3_h,
         CASE WHEN SAFE_CAST(acumulado_chuva_6_h AS FLOAT64)  < 0 THEN NULL ELSE acumulado_chuva_6_h END acumulado_chuva_6_h,
@@ -38,10 +38,10 @@ WITH remove_extreme_values as (
             FROM `rj-cor.clima_pluviometro_staging.taxa_precipitacao_cemaden_last_partition`
         )").columns[0].values()[0] %}
     WHERE
-        ano >= EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AND
-        mes >= EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AND
-        dia >= EXTRACT(DAY FROM DATE(("{{ max_partition }}")))
-    
+        ano_particao >= SAFE_CAST(EXTRACT(YEAR FROM DATE(("{{ max_partition }}"))) AS STRING) AND
+        mes_particao >= SAFE_CAST(EXTRACT(MONTH FROM DATE(("{{ max_partition }}"))) AS STRING) AND
+        data_particao >= SAFE_CAST(DATE_TRUNC(DATE(("{{ max_partition }}")), day) AS STRING)
+
     {% endif %} 
     ),
 
@@ -49,7 +49,7 @@ WITH remove_extreme_values as (
     SELECT 
         id_estacao,
         data_medicao,
-        MIN(SAFE_CAST(instantaneo_chuva AS FLOAT64)) instantaneo_chuva,
+        MIN(SAFE_CAST(acumulado_chuva_10_min AS FLOAT64)) acumulado_chuva_10_min,
         MIN(SAFE_CAST(acumulado_chuva_1_h AS FLOAT64)) acumulado_chuva_1_h,
         MIN(SAFE_CAST(acumulado_chuva_3_h AS FLOAT64)) acumulado_chuva_3_h,
         MIN(SAFE_CAST(acumulado_chuva_6_h AS FLOAT64)) acumulado_chuva_6_h,
@@ -66,9 +66,11 @@ WITH remove_extreme_values as (
 
 SELECT 
     DISTINCT
-    CONCAT(id_estacao, '_', data_medicao) AS primary_key,
     id_estacao,
-    instantaneo_chuva,
+    SAFE_CAST(
+        SAFE.PARSE_DATETIME('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
+    ) AS data_medicao,
+    acumulado_chuva_10_min,
     acumulado_chuva_1_h,
     acumulado_chuva_3_h,
     acumulado_chuva_6_h,
@@ -77,9 +79,7 @@ SELECT
     acumulado_chuva_48_h,
     acumulado_chuva_72_h,
     acumulado_chuva_96_h,
-    SAFE_CAST(
-            SAFE.PARSE_TIMESTAMP('%Y-%m-%d %H:%M:%S', data_medicao) AS TIME
-        ) AS horario,
-    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
+    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao,
+    CONCAT(id_estacao, '_', data_medicao) AS primary_key
 FROM 
     remove_duplicated
