@@ -66,7 +66,6 @@ WITH remove_extreme_values as (
 
 SELECT 
     DISTINCT
-    CONCAT(id_estacao, '_', data_medicao) AS primary_key,
     id_estacao,
     SAFE_CAST(
         SAFE.PARSE_DATETIME('%Y-%m-%d %H:%M:%S', data_medicao) AS DATETIME
@@ -80,6 +79,7 @@ SELECT
     acumulado_chuva_48_h,
     acumulado_chuva_72_h,
     acumulado_chuva_96_h,
-    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao
+    SAFE_CAST(DATE_TRUNC(DATE(data_medicao), day) AS DATE) data_particao,
+    CONCAT(id_estacao, '_', data_medicao) AS primary_key
 FROM 
     remove_duplicated
