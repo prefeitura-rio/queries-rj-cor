@@ -29,7 +29,7 @@ FROM `rj-cor.adm_cor_comando_staging.ocorrencias_nova_api`
 
 {% if is_incremental() %}
 
-    WHERE data_particao <= CURRENT_DATE('America/Sao_Paulo')
-    AND data_particao >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
+    WHERE CAST(data_particao AS DATE) <= CURRENT_DATE('America/Sao_Paulo')
+        AND CAST(data_particao AS DATE) >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
 
 {% endif %} 
