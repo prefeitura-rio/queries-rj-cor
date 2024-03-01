@@ -205,4 +205,4 @@ models:
       - name: primary_key
         description: "Chave primária criada a partir da concatenação da coluna id_estacao e data_medicao. Serve para evitar dados duplicados."
       - name: data_particao
-        description: "Data em que foi realizada a medição no formato YYYY-MM-DD".
+        description: "Data em que foi realizada a medição no formato YYYY-MM-DD."
