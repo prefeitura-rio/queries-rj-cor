@@ -12,5 +12,6 @@ SELECT
   SAFE_CAST(data_inicio_operacao AS DATETIME) data_inicio_operacao,
   SAFE_CAST(data_fim_operacao AS DATETIME) data_fim_operacao,
   SAFE_CAST(data_atualizacao AS DATETIME) data_atualizacao
-FROM `rj-cor.clima_pluviometro_staging.estacoes_alertario` 
+FROM `rj-cor.clima_pluviometro_staging.estacoes_alertario`
+where id_estacao in ("1", "11", "16", "19", "20", "22", "28", "32")
 ORDER BY CAST(id_estacao AS INT)
