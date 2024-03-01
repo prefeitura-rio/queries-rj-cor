@@ -81,6 +81,8 @@ models:
         description: "Acumulado de chuva em 10 minutos."
       - name: acumulado_chuva_15min
         description: "Acumulado de chuva em 15 minutos."
+      - name: acumulado_chuva_30min
+        description: "Acumulado de chuva em 30 minutos."
       - name: acumulado_chuva_1h
         description: "Acumulado de chuva em 1 hora."
       - name: acumulado_chuva_2h
