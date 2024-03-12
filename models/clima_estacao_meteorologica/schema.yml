@@ -206,3 +206,18 @@ models:
         description: "Chave primária criada a partir da concatenação da coluna id_estacao e data_medicao. Serve para evitar dados duplicados."
       - name: data_particao
         description: "Data em que foi realizada a medição no formato YYYY-MM-DD."
+
+  - name: intensidade_vento
+    description: "Definição do Sistema de Alerta de Cheia que relaciona velocidade do vento com sua intensidade."
+    columns:
+      - name: intensidade_vento
+        description: "Intensidade do Vento segundo o Sistema de Alerta de Cheia."
+        tests:
+          - unique
+          - not_null
+      - name: velocidade_minima
+        description: "Velocidade mínima do vento para ser considerado nessa categoria de intensidade."
+      - name: velocidade_maxima
+        description: "Velocidade máxima do vento para ser considerado nessa categoria de intensidade."
+      - name: data_atualizacao
+        description: "Última data em que os dados foram atualizados."
