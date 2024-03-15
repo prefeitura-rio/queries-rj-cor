@@ -44,9 +44,12 @@ models:
     clima_pluviometro:
       +materialized: table
       +schema: clima_pluviometro
-    clima_satelite:
+    clima_fluviometro:
       +materialized: table
       +schema: clima_fluviometro
+    clima_satelite:
+      +materialized: table
+      +schema: clima_satelite
     clima_estacao_meteorologica:
       +materialized: table
       +schema: clima_estacao_meteorologica
