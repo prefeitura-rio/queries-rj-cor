@@ -18,7 +18,7 @@ models:
       - name: tipo_reservatorio
         description: Qual o tipo de reservatório rio, córrego, lagoa...
 
-  - name: estacoes_inea
+  - name: estacoes_inea_flu
     description: "Dados sobre as estações pluviométricas do INEA na cidade do Rio de Janeiro."
     columns:
       - name: id_estacao
