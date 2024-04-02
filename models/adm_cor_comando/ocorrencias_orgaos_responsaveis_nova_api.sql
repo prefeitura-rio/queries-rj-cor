@@ -17,8 +17,8 @@ WITH remove_duplicated AS (
         SAFE_CAST(data_chegada AS TIMESTAMP) data_chegada,
         SAFE_CAST(data_inicio AS TIMESTAMP) data_inicio,
         SAFE_CAST(data_fim AS TIMESTAMP) data_fim,
-        REGEXP_REPLACE(NORMALIZE(descricao, NFD), r'\pM', '') descricao,
-        REGEXP_REPLACE(NORMALIZE(status, NFD), r'\pM', '') status,
+        descricao,
+        status,
         SAFE_CAST(data_particao AS DATE) data_particao,
         CONCAT(id_evento, '_', sigla, '_', descricao) AS primary_key,
         row_number() OVER (PARTITION BY id_evento ORDER BY created_at DESC) AS last_update
@@ -26,11 +26,11 @@ WITH remove_duplicated AS (
 
     {% if is_incremental() %}
 
-        WHERE data_particao <= CAST(CURRENT_DATE('America/Sao_Paulo') AS STRING)
-        AND data_particao >= CAST(DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day) AS STRING)
+        WHERE data_particao <= CURRENT_DATE('America/Sao_Paulo')
+        AND data_particao >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
 
     {% endif %}
 )
 
-SELECT * EXCEPT(last_update) FROM remove_duplicated
+SELECT * FROM remove_duplicated
 WHERE last_update = 1
