@@ -26,8 +26,8 @@ WITH remove_duplicated AS (
 
     {% if is_incremental() %}
 
-        WHERE data_particao <= CURRENT_DATE('America/Sao_Paulo')
-        AND data_particao >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
+        WHERE data_particao <= CAST(CURRENT_DATE('America/Sao_Paulo') AS STRING)
+        AND data_particao >= CAST(DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day) AS STRING)
 
     {% endif %}
 )
