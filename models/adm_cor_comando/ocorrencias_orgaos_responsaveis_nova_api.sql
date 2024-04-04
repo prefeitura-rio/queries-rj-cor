@@ -21,7 +21,7 @@ WITH remove_duplicated AS (
         status,
         SAFE_CAST(data_particao AS DATE) data_particao,
         CONCAT(id_evento, '_', sigla, '_', descricao) AS primary_key,
-        row_number() OVER (PARTITION BY id_evento ORDER BY created_at DESC) AS last_update
+        row_number() OVER (PARTITION BY id_evento ORDER BY last_updated_at DESC) AS last_update
     FROM `rj-cor.adm_cor_comando_staging.ocorrencias_orgaos_responsaveis_nova_api`
 
     {% if is_incremental() %}
@@ -32,5 +32,5 @@ WITH remove_duplicated AS (
     {% endif %}
 )
 
-SELECT * FROM remove_duplicated
+SELECT * EXCEPT(last_update) FROM remove_duplicated
 WHERE last_update = 1

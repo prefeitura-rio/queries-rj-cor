@@ -13,8 +13,8 @@
 WITH remove_duplicated AS (
     SELECT
         DISTINCT
-        SAFE_CAST(SAFE_CAST(SAFE_CAST(id_pop AS FLOAT64) AS INT64) AS STRING) id_pop,
         id_evento,
+        pop,
         bairro,
         SAFE_CAST(data_inicio AS TIMESTAMP) data_inicio,
         SAFE_CAST(data_fim AS TIMESTAMP) data_fim,
@@ -26,15 +26,15 @@ WITH remove_duplicated AS (
         status,
         tipo,
         SAFE_CAST(data_particao  AS DATE) as data_particao,
-        row_number() OVER (PARTITION BY id_evento ORDER BY created_at DESC) AS last_update
-    FROM `rj-cor.adm_cor_comando_staging.ocorrencias_nova_api`
+        row_number() OVER (PARTITION BY id_evento ORDER BY last_updated_at DESC) AS last_update
+    FROM `rj-cor.adm_cor_comando_staging.ocorrencias`
 
-{% if is_incremental() %}
+    {% if is_incremental() %}
 
-    WHERE CAST(data_particao AS DATE) <= CURRENT_DATE('America/Sao_Paulo')
-        AND CAST(data_particao AS DATE) >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
+        WHERE CAST(data_particao AS DATE) <= CURRENT_DATE('America/Sao_Paulo')
+            AND CAST(data_particao AS DATE) >= DATE_SUB(CURRENT_DATE('America/Sao_Paulo'), INTERVAL 30 day)
 
-{% endif %}
+    {% endif %}
 
 )
 
